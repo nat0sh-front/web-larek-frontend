@@ -13,11 +13,16 @@ export interface IItem {
     price: TPrice;
 }
 
-export interface ICustomer {
+export interface IOrderForm {
     payment: TPayment;
     address: string;
     email: string;
     phone: string;
+}
+
+export interface IOrder extends IOrderForm {
+    items: string[];
+    total: TPrice;
 }
 
 export type TItemMain = Pick<IItem, 'title' | 'category' | 'image' | 'price'>;
@@ -27,25 +32,24 @@ export type TItemModal = Pick<IItem, 'title' | 'category' | 'description' | 'ima
 export type TItemBasket = Pick<IItem, 'id' | 'title' | 'price'>;
 
 export interface ICatalogModel {
-    setItems(items: IItem[]): void;
-    getItems(): IItem[];
+    items: IItem[];
+    preview: string | null;
     getItem(id: string): IItem | null;
-    setPreview(id: string | null): void;
-    getPreview(): string | null;
 }
 
 export interface IBasketModel {
-    getItems(): Set<string>;
+    items: Set<string>;
     addItem(id: string): void;
     removeItem(id: string): void;
-    calculateTotal(items: IItem[]): TPrice;
-    getItemsCount(): number;
+    calculateTotal(): TPrice;
+    getCount(): number;
     clear(): void;
 }
 
-export interface ICustomerModel {
-  getCustomer(): ICustomer;
-  setCustomer(data: Partial<ICustomer>): void;
-  validateStep(fieldsPartial: Partial<ICustomer>): Partial<Record<keyof ICustomer, string | null>>;
-  validateAll(): boolean;
+export interface IOrderModel {
+    order: IOrder;
+    setItems(items: Partial<IOrder>): void;
+    setFormData(data: Partial<IOrderForm>): void;
+    validateStep(formPart: Partial<IOrderForm>): string | null;
+    reset(): void;
 }
