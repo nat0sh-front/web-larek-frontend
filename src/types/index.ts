@@ -20,16 +20,15 @@ export interface IOrderForm {
     phone: string;
 }
 
-export interface IOrder extends IOrderForm {
-    items: string[];
-    total: TPrice;
-}
-
 export type TItemMain = Pick<IItem, 'title' | 'category' | 'image' | 'price'>;
 
 export type TItemModal = Pick<IItem, 'title' | 'category' | 'description' | 'image' | 'price'>;
 
 export type TItemBasket = Pick<IItem, 'id' | 'title' | 'price'>;
+
+export type TDeliveryForm = Pick<IOrderForm, 'payment' | 'address'>;
+
+export type TContactForm = Pick<IOrderForm, 'email' | 'phone'>
 
 export interface ICatalogModel {
     items: IItem[];
@@ -47,9 +46,6 @@ export interface IBasketModel {
 }
 
 export interface IOrderModel {
-    order: IOrder;
-    setItems(items: Partial<IOrder>): void;
-    setFormData(data: Partial<IOrderForm>): void;
-    validateStep(formPart: Partial<IOrderForm>): string | null;
+    orderForm: IOrderForm;
     reset(): void;
 }
