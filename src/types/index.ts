@@ -1,6 +1,8 @@
+import { ApiPostMethods } from "../components/base/api";
+
 export type TCategory = 'софт-скил' | 'другое' | 'дополнительное' | 'кнопка' | 'хард-скил';
 
-export type TPayment = 'Онлайн' | 'При получении' | null;
+export type TPayment = 'online' | 'offline' | null;
 
 export type TPrice = number | null;
 
@@ -13,11 +15,37 @@ export interface IItem {
     price: TPrice;
 }
 
+export function mapItem(raw: any): IItem {
+    const allowedCategories: TCategory[] = [
+        'софт-скил',
+        'другое',
+        'дополнительное',
+        'кнопка',
+        'хард-скил'
+    ];
+
+    return {
+        id: raw.id,
+        description: raw.description,
+        image: raw.image,
+        title: raw.title,
+        category: allowedCategories.includes(raw.category)
+            ? raw.category
+            : 'другое', // fallback
+        price: typeof raw.price === 'number' ? raw.price : null,
+    };
+}
+
 export interface IOrderForm {
-    payment: TPayment;
-    address: string;
-    email: string;
-    phone: string;
+    payment?: TPayment;
+    address?: string;
+    email?: string;
+    phone?: string;
+}
+
+export interface IOrder extends IOrderForm {
+    total: TPrice;
+    items: string[];
 }
 
 export type TItemMain = Pick<IItem, 'title' | 'category' | 'image' | 'price'>;
@@ -48,4 +76,11 @@ export interface IBasketModel {
 export interface IOrderModel {
     orderForm: IOrderForm;
     reset(): void;
+    // validateStep надо придумать и изменить + добавить в доку
+}
+
+export interface IApi {
+    baseUrl: string;
+    get<T>(uri: string): Promise<T>;
+    post<T>(uri: string, data: object, method?: ApiPostMethods): Promise<T>;
 }

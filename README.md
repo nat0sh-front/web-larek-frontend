@@ -71,7 +71,7 @@ type TPrice = number | null;
 Способ оплаты
 
 ```
-type TPayment = 'Онлайн' | 'При получении' | null;
+type TPayment = 'online' | 'offline' | null;
 ```
 
 Представления товара
@@ -95,21 +95,12 @@ interface IOrderForm {
 }
 ```
 
-Заказ
-
-```
-interface IOrder extends IOrderForm {
-    items: string[];
-    total: TPrice;
-}
-```
-
 Представления данных форм
 
 ```
-type IDeliveryForm = Pick<IOrderForm, 'payment' | 'address'>;
+type TDeliveryForm = Pick<IOrderForm, 'payment' | 'address'>;
 
-type IContactsForm = Pick<IOrderForm, 'email' | 'phone'>;
+type TContactsForm = Pick<IOrderForm, 'email' | 'phone'>;
 ```
 
 ## Архитектура приложения
@@ -145,7 +136,8 @@ type IContactsForm = Pick<IOrderForm, 'email' | 'phone'>;
 - events: IEvents - экземпляр класса `EventEmitter` для инициации событий при изменении данных.
 
 Так же класс предоставляет набор методов для взаимодействия с этими данными.
-- getItem(id: string): IItem | null — возвращает товар по ID;
+- getItem(id: string): IItem — возвращает товар по ID;
+- clearPreview(): void — очищает поле preview;
 - а так-же сеттеры и геттеры для сохранения и получения данных из полей класса
 
 #### Класс BasketModel
@@ -172,7 +164,8 @@ type IContactsForm = Pick<IOrderForm, 'email' | 'phone'>;
 - events: IEvents — экземпляр класса `EventEmitter` для инициации событий при изменении данных.
 
 Класс предоставляет набор методов и свойств для взаимодействия с этими данными:
-- reset(): void — очищает заказ и сбрасывает все данные формы.  
+- reset(): void — очищает заказ и сбрасывает все данные формы.
+- checkValidation — валидириует поля формы заказа.
 - сеттеры и геттеры для безопасного доступа и обновления order
 
 ### Классы представления
@@ -342,7 +335,7 @@ render(data: ISuccess): HTMLElement — рендерит сообщение об
 | `basket:open`             | пользователь открыл корзину               |
 | `basket:checkout`         | пользователь перешёл к заполнению формы   |
 | `form:updated`            | обновились данные формы                   |
-| `form:validated-step`     | валидация текущего шага формы             |
+| `form:cleared`     | форма очищена              |
 | `form:submit`             | пользователь подтвердил оформление заказа |
 | `modal:open`              | модальное окно открылось                  |
 | `modal:close`             | модальное окно закрылось                  |
