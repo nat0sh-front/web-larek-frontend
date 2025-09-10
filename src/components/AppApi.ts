@@ -1,4 +1,4 @@
-import { IApi, IItem, IOrder, IOrderForm } from "../types";
+import { IApi, IItem, IItemsResponse, IOrder} from "../types";
 
 export class AppApi {
     private _baseApi: IApi;
@@ -7,8 +7,8 @@ export class AppApi {
         this._baseApi = baseApi;
     }
 
-    getItems(): Promise<IItem[]> {
-        return this._baseApi.get<IItem[]>(`/product`).then((items: IItem[]) => items);
+    getItems(): Promise<IItemsResponse> {
+        return this._baseApi.get<IItemsResponse>(`/product`);
     }
 
     getItem(id: string): Promise<IItem> {

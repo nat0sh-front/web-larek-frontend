@@ -31,7 +31,7 @@ export function mapItem(raw: any): IItem {
         title: raw.title,
         category: allowedCategories.includes(raw.category)
             ? raw.category
-            : 'другое', // fallback
+            : 'другое', 
         price: typeof raw.price === 'number' ? raw.price : null,
     };
 }
@@ -77,6 +77,11 @@ export interface IOrderModel {
     orderForm: IOrderForm;
     reset(): void;
     // validateStep надо придумать и изменить + добавить в доку
+}
+
+export interface IItemsResponse {
+  total: number;
+  items: IItem[];
 }
 
 export interface IApi {
