@@ -1,5 +1,5 @@
-import { IEvents } from "./base/events";
-import { View } from "./base/View";
+import { IEvents } from "../base/events";
+import { View } from "../base/View";
 
 export interface IModal {
     content: HTMLElement;

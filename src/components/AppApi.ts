@@ -1,4 +1,21 @@
-import { IApi, IItem, IItemsResponse, IOrder} from "../types";
+import { IItem, TOrder } from "../types";
+import { ApiPostMethods } from "./base/api";
+
+interface IItemsResponse {
+  total: number;
+  items: IItem[];
+}
+
+interface IOrderResponse {
+    items: string[];
+    total: number;
+}
+
+export interface IApi {
+    baseUrl: string;
+    get<T>(uri: string): Promise<T>;
+    post<T>(uri: string, data: object, method?: ApiPostMethods): Promise<T>;
+}
 
 export class AppApi {
     private _baseApi: IApi;
@@ -15,7 +32,7 @@ export class AppApi {
         return this._baseApi.get<IItem>(`/product/${id}`).then((item: IItem) => item);
     }
 
-    setOrder(data: IOrder): Promise<IOrder> {
-        return this._baseApi.post<IOrder>(`/order`, data, 'POST').then((res: IOrder) => res);
+    setOrder(data: TOrder): Promise<IOrderResponse> {
+        return this._baseApi.post<TOrder>(`/order`, data, 'POST').then((res: IOrderResponse) => res);
     }
 }

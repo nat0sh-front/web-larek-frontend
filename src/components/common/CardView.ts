@@ -1,7 +1,7 @@
-import { IItem, TCategory, TPrice } from "../types";
-import { CDN_URL } from "../utils/constants";
-import { IEvents } from "./base/events";
-import { View } from "./base/View";
+import { IItem, TCategory, TPrice } from "../../types";
+import { CDN_URL } from "../../utils/constants";
+import { IEvents } from "../base/events";
+import { View } from "../base/View";
 
 const categoryMap: Record<TCategory | 'другое', string> = {
   'софт-скил': 'card__category_soft',
@@ -56,12 +56,10 @@ export class CardView<T> extends View<T> {
     }
 
     set price(price: TPrice) {
-        if (price === null || price === undefined) {
+        if (price === null) {
             this._price.textContent = 'Бесценно';
-            this._price.classList.add('card__price_free');
         } else {
             this._price.textContent = `${price} синапсов`;
-            this._price.classList.remove('card__price_free');
         }
     }
 
