@@ -51,5 +51,6 @@ export class BasketModel implements IBasketModel {
 
     clear(): void {
         this._items = [];
+        this.events.emit('basket:changed', { cards: this._items });
     }
 }

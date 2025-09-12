@@ -25,7 +25,7 @@ export class FormView extends View<IForm> {
 
 			const field = target.name as keyof IOrderForm;
 			const value = target.value;
-			this.events.emit(`${this.form.name}:change`, {
+			this.events.emit(`${this.form.name}:changed`, {
 				field,
 				value,
 			});

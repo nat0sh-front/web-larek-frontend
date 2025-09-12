@@ -25,11 +25,7 @@ export class DeliveryFormView extends FormView {
 				);
 				button.classList.add('button_alt-active');
 
-				this.events.emit(`${form.name}:change`, {
-					field: 'payment',
-					value: selectedPayment,
-				});
-				console.log({
+				this.events.emit(`${form.name}:changed`, {
 					field: 'payment',
 					value: selectedPayment,
 				});

@@ -13,9 +13,7 @@ export class CardBasketView extends CardView<TItemBasket> {
         this.deleteButton = this.container.querySelector('.basket__item-delete');
 
         this.deleteButton.addEventListener('click', () => {
-            const payload = { card: this };
-            console.log('Удаление из корзины:', payload);
-            this.events.emit('basket:item-removed', payload);
+            this.events.emit('basket:item-removed', { card: this });
         });
     }
 

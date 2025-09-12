@@ -168,7 +168,7 @@ events.on('contacts:open', () => {
 });
 
 events.on(
-	'delivery:change',
+	'delivery:changed',
 	({ field, value }: { field: string; value: TPayment | string }) => {
 		orderModel.orderForm = { ...orderModel.orderForm, [field]: value };
 		const error = orderModel.validateDelivery();
@@ -177,7 +177,7 @@ events.on(
 );
 
 events.on(
-	'contacts:change',
+	'contacts:changed',
 	({ field, value }: { field: string; value: string }) => {
 		orderModel.orderForm = { ...orderModel.orderForm, [field]: value };
 		const error = orderModel.validateContacts();
@@ -198,7 +198,7 @@ events.on('order:ready', () => {
 	api
 		.setOrder(order)
 		.then((res) => {
-			console.log(res);
+			console.log("Заказ успешно отправлен", res);
 		})
 		.catch((err) => {
 			console.error(err);
