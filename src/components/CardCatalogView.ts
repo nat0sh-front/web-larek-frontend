@@ -7,7 +7,7 @@ export class CardCatalogView extends CardView<TItemMain> {
         super(container, events);
 
         this.container.addEventListener('click', () => {
-            this.events.emit('card:select', { card: this });
+            this.events.emit('card:select', { id: this.id });
         });
     }
 }

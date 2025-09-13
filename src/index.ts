@@ -31,7 +31,6 @@ api
 	.getItems()
 	.then((res) => {
 		catalogModel.items = res.items;
-		events.emit('initialData:loaded');
 	})
 	.catch((err) => {
 		console.error(err);
@@ -90,10 +89,10 @@ events.on('modal:close', () => {
 	page.locked = false;
 });
 
-events.on('card:select', (data: { card: IItem }) => {
-	const { card } = data;
-	const item = catalogModel.getItem(card.id);
-	cardModal.setButtonState(basketModel.inBasket(card.id));
+events.on('card:select', (data: { id: string }) => {
+	const { id } = data;
+	const item = catalogModel.getItem(id);
+	cardModal.setButtonState(basketModel.inBasket(id));
 	const modalContent = cardModal.render(item);
 	modal.render({ content: modalContent });
 	modal.open();

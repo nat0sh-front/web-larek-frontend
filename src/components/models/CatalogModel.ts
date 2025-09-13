@@ -15,6 +15,7 @@ export class CatalogModel implements ICatalogModel{
 
     set items(items: IItem[]) {
         this._items = items;
+        this.events.emit('initialData:loaded');
     }
 
     get items() {
